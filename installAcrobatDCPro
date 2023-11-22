@@ -21,6 +21,11 @@ Invoke-Command @parameters
 Invoke-Command -ComputerName $remoteHost -ScriptBlock { Start-Process -FilePath "C:\temp\remote_install\Deploy-Application.exe" -ArgumentList "$using:arg1", "$using:arg2" -PassThru -Wait }
 
 ### Perform the checks
-Enter-PSSession $remoteHost
-Get-ItemProperty -Path $using:acrobatRegKey | Select-Object -ExpandProperty DisplayVersion
+$s = New-PSSession -ComputerName $remoteHost
+Enter-PSSession -Session $s
+$check = @{
+  ComputerName = $remoteHost
+  ScriptBlock = { Get-ItemProperty -Path $using:acrobatRegKey | Select-Object -ExpandProperty DisplayVersion }
+}
+Invoke-Command @check
 Exit-PSSession
