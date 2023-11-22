@@ -1,6 +1,6 @@
 ### Set hostname variables
 Set-Variable -Name "remoteHost" -Value "__REMOTEHOST__"
-Set-Variable -Name "sccmServer" -Value "__SCCMSERVER__"
+Set-Variable -Name "sccmServer" -Value "__REMOTESERVER__"
 
 ### Set the executable name variables
 Set-Variable -Name "appInstallPath" -Value "C:\temp\remote_install\"
@@ -13,12 +13,12 @@ Set-Variable -Name "acrobatRegKey" -Value "HKLM:\SOFTWARE\WOW6432Node\Microsoft\
 ### Copies the appropriate files and runs the install
 $parameters = @{
         ScriptBlock  = { (New-Item -Path "\\$remoteHost\c$\temp\remote_install" -ItemType Directory)
-                        (Get-ChildItem -Path "\\$sccmServer\__PATHHERE__\*" | Copy-Item -Destination "\\$remoteHost\c$\temp\remote_install" -Recurse) }
+                        (Get-ChildItem -Path "\\$sccmServer\__APPS_PATH__*" | Copy-Item -Destination "\\$remoteHost\c$\temp\remote_install" -Recurse) }
 }
 Invoke-Command @parameters
 
 ### Performs the upgrade
-Invoke-Command -ComputerName $remoteHost -ScriptBlock { Start-Process -FilePath "C:\temp\remote_install\Deploy-Application.exe" -ArgumentList "$using:arg1", "$using:arg2"  -PassThru -Wait }
+Invoke-Command -ComputerName $remoteHost -ScriptBlock { Start-Process -FilePath "C:\temp\remote_install\Deploy-Application.exe" -ArgumentList "$using:arg1", "$using:arg2" -PassThru -Wait }
 
 ### Perform the checks
 Enter-PSSession $remoteHost
