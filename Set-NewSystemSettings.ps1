@@ -72,3 +72,14 @@ Invoke-Expression -Command "ms-windows-store://pdp/?ProductId=9n0dx20hk701"
 
 winget install Microsoft.WindowsTerminal
 
+# Set lid close action to "Do nothing"
+powercfg /change standby-timeout-ac 0
+powercfg /change standby-timeout-dc 0
+powercfg /change monitor-timeout-ac 0
+powercfg /change monitor-timeout-dc 0
+powercfg /change standby-timeout-ac 0
+powercfg /change standby-timeout-dc 0
+powercfg /change hibernate-timeout-ac 0
+powercfg /change hibernate-timeout-dc 0
+
+Write-Output "Lid close action set to 'Do nothing'"
