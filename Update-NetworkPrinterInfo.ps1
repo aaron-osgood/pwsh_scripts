@@ -1,5 +1,5 @@
 # Specify the old and new printer details
-$oldPrintServer = "oldprintserver
+$oldPrintServer = "oldprintserver"
 $oldPrinterName = "oldprintername"
 $newPrintServer = "newprintserver"
 $newPrinterName = "newprintername"
